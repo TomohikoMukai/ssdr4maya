@@ -7,7 +7,7 @@ binフォルダにあるビルド済みパッケージ一式を、Mayaのプラグインパス（MAYA_PLUG_IN_
 [![SSDR4Maya](http://img.youtube.com/vi/ZPKKR24gGbg/0.jpg)](http://www.youtube.com/watch?v=ZPKKR24gGbg)
 
 ## ビルドと実行方法
-拡張ライブラリ ssdr.pyd は Visual Studio 2013 Professional プロジェクトとして作成しています。ビルドには、外部ライブラリとして [Eigen](http://eigen.tuxfamily.org/ "Eigen")、 [QuadProg++](http://quadprog.sourceforge.net/ "QuadProg++")、[Boost](http://www.boost.org/ "Boost") 、および[Maya 2016.3 Developer Kit](https://apps.autodesk.com/MAYA/ja/Detail/Index?id=6303159649350432165&appLang=en&os=Win64 "MayaDevKit)が必要です。なお、ビルドおよび実行テストには Eigen 3.2.8、QuadProg++ 1.2.1、およびBoost 1.6.1 を用いました。
+拡張ライブラリ ssdr.pyd は Visual Studio 2013 Professional プロジェクトとして作成しています。ビルドには、外部ライブラリとして [Eigen](http://eigen.tuxfamily.org/ "Eigen")、 [QuadProg++](http://quadprog.sourceforge.net/ "QuadProg++")、[Boost](http://www.boost.org/ "Boost") 、および[Maya 2016.3 Developer Kit](https://apps.autodesk.com/MAYA/ja/Detail/Index?id=6303159649350432165&appLang=en&os=Win64 "MayaDevKit")が必要です。なお、ビルドおよび実行テストには Eigen 3.2.8、QuadProg++ 1.2.1、およびBoost 1.6.1 を用いました。
 
 ビルド手順は次の通りです。
 

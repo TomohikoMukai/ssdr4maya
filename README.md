@@ -12,7 +12,7 @@
 このプラグインは、各フレームのシェイプをスキン＋ボーン姿勢で近似します。隣り合うフレーム同士は必ずしも滑らかに変化する必要はありません。言い換えれば、バラバラのポーズが1フレームずつ記録されているようなシーケンスでも処理可能です。
 
 手元ではnClothシミュレーションへのボーンアニメーションへのベイク、[Mesh Data from 
-Deformation Transfer for Triangle Meshes](https://people.csail.mit.edu/sumner/research/deftransfer/data.html "MeshData@CSAIL)の公開データ、およびMaya Muscleなどの少数のデータでのみテストしています。
+Deformation Transfer for Triangle Meshes](https://people.csail.mit.edu/sumner/research/deftransfer/data.html "MeshData@CSAIL")の公開データ、およびMaya Muscleなどの少数のデータでのみテストしています。
 
 ###利用手順
 1. アニメーション開始時間と終了時間を指定します。

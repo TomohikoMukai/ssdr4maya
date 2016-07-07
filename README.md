@@ -1,35 +1,60 @@
 # SSDR4Maya
-�{�R�[�h�́A�_��"Smooth Skinning Decomposition with Rigid Bones"��Maya2016�p�v���O�C�������̃T���v���ł��B
+本コードは、Binh Huy Le氏とZhigang Deng氏による論文[Smooth Skinning Decomposition with Rigid Bones](http://graphics.cs.uh.edu/ble/papers/2012sa-ssdr/ "SSDR paper")のMaya2016用プラグイン実装のサンプルです。
 
-## ���s���@���g�p��
-bin�t�H���_�ɂ���r���h�ς݃p�b�P�[�W�ꎮ���AMaya�̃v���O�C���p�X�iMAYA_PLUG_IN_PATH�j���ʂ��Ă���t�H���_�ɒu���܂��B
+ 1. Binh Huy Le and Zhigang Deng, Smooth Skinning Decomposition with Rigid Bones, ACM Transactions on Graphics, 31 (6), (2012), 199:1-199:10.
+ 2. Binh Huy Le and Zhigang Deng, Robust and Accurate Skeletal Rigging from Mesh Sequences, ACM Transactions on Graphics, 33 (4), (2014), 84:1-84:10.
+ 3. 向井 智彦, スキニング分解, Computer Graphics Gems JP 2015 7章：スキニング分解（ボーンデジタル）, 2015.
+
+## インストール方法
+* binフォルダにあるビルド済みパッケージ一式を、Mayaのプラグインパス（MAYA_PLUG_IN_PATH）が通っているフォルダに置きます。
+
+## 使用方法
+このプラグインは、各フレームのシェイプをスキン＋ボーン姿勢で近似します。隣り合うフレーム同士は必ずしも滑らかに変化する必要はありません。言い換えれば、バラバラのポーズが1フレームずつ記録されているようなシーケンスでも処理可能です。
+
+手元ではnClothシミュレーションへのボーンアニメーションへのベイク、[Mesh Data from 
+Deformation Transfer for Triangle Meshes](https://people.csail.mit.edu/sumner/research/deftransfer/data.html "MeshData@CSAIL)の公開データ、およびMaya Muscleなどの少数のデータでのみテストしています。
+
+###利用手順
+1. アニメーション開始時間と終了時間を指定します。
+ - 指定した時間範囲のみが処理されます。
+ - アニメーションが設定されていない余分な範囲も選択されていると、計算時間が長くなったり、計算が不安定になるなどの不具合が生じます。
+2. 処理対象となるシェイプを選択します。
+3. メニューの[MukaiLab]->[SSDR]->[build]より処理を開始します。
+4. 処理が終わったら、コマンドラインに近似誤差（RMSE）と使用しているボーン数（#Bones）が表示されます。
+ - 最小ボーン数や最大インフルーエンス数などの計算パラメータは、mlSsdrBuilder.py を直接編集することで変更できます。
+5. 変換後のスキンとボーンは「SsdrResult」グループにまとめられます。
+ - 変換前のシェイプと同じ位置に表示されています。
+ - 全てのボーンは、バインドポーズでは必ずワールド座標系の原点に配置されます。原点中心の動き（変位）がシェイプに作用するイメージです。
+
+利用イメージは下記のYouTubeビデオもご参照下さい。
 
 [![SSDR4Maya](http://img.youtube.com/vi/ZPKKR24gGbg/0.jpg)](http://www.youtube.com/watch?v=ZPKKR24gGbg)
 
-## �r���h�Ǝ��s���@
-�g�����C�u���� ssdr.pyd �� Visual Studio 2013 Professional �v���W�F�N�g�Ƃ��č쐬���Ă��܂��B�r���h�ɂ́A�O�����C�u�����Ƃ��� [Eigen](http://eigen.tuxfamily.org/ "Eigen")�A [QuadProg++](http://quadprog.sourceforge.net/ "QuadProg++")�A[Boost](http://www.boost.org/ "Boost") �A�����[Maya 2016.3 Developer Kit](https://apps.autodesk.com/MAYA/ja/Detail/Index?id=6303159649350432165&appLang=en&os=Win64 "MayaDevKit")���K�v�ł��B�Ȃ��A�r���h����ю��s�e�X�g�ɂ� Eigen 3.2.8�AQuadProg++ 1.2.1�A�����Boost 1.6.1 ��p���܂����B
+### 計算パラメータの調整
+SSDRの計算パラメータは、mlSsdrBuilder.py内、ssdrBuildCmdクラスの冒頭にまとめられています。
 
-�r���h�菇�͎��̒ʂ�ł��B
+- numMaxInfluences： 各頂点当たりに割り当てられる最大ボーン数
+- numMinBones： 頂点アニメーション近似に用いる最小ボーン数
+- numMaxIterations： 最大反復回数
 
-1. Eigen�̃C���X�g�[���t�H���_�ɃC���N���[�h�p�X��ʂ��B
-2. Boost�̃C���X�g�[���t�H���_�ɃC���N���[�h�p�X��ʂ��B
-3. //MAYA_LOCATION/include ����� //MAYA_LOCATION/include/python2.7 �t�H���_�ɃC���N���[�h�p�X��ʂ��B
-4. QuadProg++���_�E�����[�h���A���L4�̃t�@�C����ssdr�t�H���_�ɃR�s�[����B
+これら3つのパラメータの変更することで、それにともなう計算結果の変化を確認できると思います。現状では、最小ボーン数に大きな値を与えると計算が破綻することを確認しています。
+
+## ビルドと実行方法
+拡張ライブラリ ssdr.pyd は Visual Studio 2013 Professional プロジェクトとして作成しています。ビルドには、外部ライブラリとして [Eigen](http://eigen.tuxfamily.org/ "Eigen")、 [QuadProg++](http://quadprog.sourceforge.net/ "QuadProg++")、[Boost](http://www.boost.org/ "Boost") 、および[Maya 2016.3 Developer Kit](https://apps.autodesk.com/MAYA/ja/Detail/Index?id=6303159649350432165&appLang=en&os=Win64 "MayaDevKit")が必要です。なお、ビルドおよび実行テストには Eigen 3.2.8、QuadProg++ 1.2.1、およびBoost 1.6.1 を用いました。
+
+###ビルド手順
+
+1. Eigenのインストールフォルダにインクルードパスを通す。
+2. Boostのインストールフォルダにインクルードパスを通す。
+3. //MAYA_LOCATION/include および //MAYA_LOCATION/include/python2.7 フォルダにインクルードパスを通す。
+4. QuadProg++をダウンロードし、下記4つのファイルをssdrフォルダにコピーする。
  * QuadProg++.hh
  * QuadProg++.cc
  * Array.hh
  * Array.cc
-5. Visual Studio 2013��Ńr���h�����s
+5. Visual Studio 2013上でビルド＆実行
 
-## �v�Z�p�����[�^�̒���
-SSDR�̌v�Z�p�����[�^�́AmlSsdrBuilder.py���AssdrBuildCmd�N���X�̖`���ɂ܂Ƃ߂��Ă��܂��B
-* numMaxInfluences�F �e���_������Ɋ��蓖�Ă���ő�{�[����
-* numMinBones�F ���_�A�j���[�V�����ߎ��ɗp����ŏ��{�[����
-* numMaxIterations�F �ő唽����
-
-�����3�̃p�����[�^�̕ύX���邱�ƂŁA����ɂƂ��Ȃ��v�Z���ʂ̕ω����m�F�ł���Ǝv���܂��B����ł́A�ŏ��{�[�����ɑ傫�Ȓl��^����ƌv�Z���j�]���邱�Ƃ��m�F���Ă��܂��B
-
-## �J�����e�X�g��
+### 開発＆テスト環境
 * Windows 10 Pro
 * Maya 2016 SP6
 * Visual Studio 2013 Update 5
@@ -38,11 +63,5 @@ SSDR�̌v�Z�p�����[�^�́AmlSsdrBuilder.py���AssdrBuildCmd�N���X�̖`���ɂ܂Ƃ߂��
 * QuadProg++ 1.2.1
 * Boost 1.6.1
 
-## �Q�l����
-
-1. Binh Huy Le and Zhigang Deng, Smooth Skinning Decomposition with Rigid Bones, ACM Transactions on Graphics, 31 (6), (2012), 199:1-199:10.
-2. Binh Huy Le and Zhigang Deng, Robust and Accurate Skeletal Rigging from Mesh Sequences, ACM Transactions on Graphics, 33 (4), (2014), 84:1-84:10.
-3. ���� �q�F, �X�L�j���O����, Computer Graphics Gems JP 2015 7�́F�X�L�j���O�����i�{�[���f�W�^���j, 2015.
-
-## �ύX����
-1. 2016/07/06 ���Ō��J
+## 変更履歴
+1. 2016/07/06 初版公開

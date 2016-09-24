@@ -68,7 +68,7 @@ SSDRの計算パラメータは、mlSsdrBuilder.py内、ssdrBuildCmdクラスの
     - Maya2016標準の開発環境に準拠
         - Visual Studio 2012 Update 4
         - boost 1.55.0
-　  - ssdr.pyd モジュール内の数学ライブラリをOpenMayaに置き換え
-　  - メニュー生成関連のpythonコードの修正
+    - ssdr.pyd モジュール内の数学ライブラリをOpenMayaに置き換え
+    - メニュー生成関連のpythonコードの修正
 
 2. 2016/07/06 初版公開

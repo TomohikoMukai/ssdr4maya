@@ -1,8 +1,12 @@
+#ifndef SSDR_H
+#define SSDR_H
 #pragma once
 
 #include <vector>
-#include <DirectXMath.h>
-#include "RigidTransform.h"
+#include <maya/MPoint.h>
+#include <maya/MMatrix.h>
+#include <maya/MQuaternion.h>
+#include <maya/MTransformationMatrix.h>
 
 namespace SSDR
 {
@@ -14,9 +18,9 @@ namespace SSDR
         //! 例示データ数
         int numExamples;
         //! バインド頂点座標（頂点数）
-        std::vector<DirectX::XMFLOAT3A> bindModel;
+        std::vector<MPoint> bindModel;
         //! 例示形状頂点座標 (例示データ数 x 頂点数）
-        std::vector<DirectX::XMFLOAT3A> sample;
+        std::vector<MPoint> sample;
 
         Input() : numVertices(0), numExamples(0) {}
         ~Input() {}
@@ -32,7 +36,7 @@ namespace SSDR
         //! インデクス（頂点数 x インデクス数）
         std::vector<int> index;
         //! スキニング行列（例示データ数 x 骨数）
-        std::vector<RigidTransform> boneTrans;
+        std::vector<MTransformationMatrix> boneTrans;
     };
 
     // 計算パラメータ構造体
@@ -49,3 +53,5 @@ namespace SSDR
     extern double Decompose(Output& output, const Input& input, const Parameter& param);
     extern double ComputeApproximationErrorSq(const Output& output, const Input& input, const Parameter& param);
 }
+
+#endif //SSDR_H

@@ -9,9 +9,9 @@
 """
 
 __author__ = "Tomohiko Mukai <contact@mukai-lab.org>"
-__status__ = "1st release"
-__version_ = "0.1"
-__date__ = "06 Jul 2016"
+__status__ = "alpha release"
+__version_ = "0.2"
+__date__ = "24 Sep 2016"
  
 import sys
 import math
@@ -24,15 +24,8 @@ import ssdr
 def maya_useNewAPI():
     pass
 
-def createMenus():
-    ssdrMenus = cmds.menu('MayaWindow|MukaiLab|SSDR', query=True, itemArray=True, tearOff=True)
-
-    if ssdrMenus is None or 'build' not in ssdrMenus:
-        cmds.setParent('MayaWindow|MukaiLab|SSDR', menu=True)
-        cmds.menuItem('build', label='build', tearOff=True, command='import maya.mel;maya.mel.eval("ssdrBuild")')
-
 def initializePlugin(plugin):
-    fnPlugin = om.MFnPlugin(plugin, vendor = 'Mukai Lab.', version = '0.1')
+    fnPlugin = om.MFnPlugin(plugin, vendor = 'Mukai Lab.', version = '0.2')
     try:
         fnPlugin.registerCommand(ssdrBuildCmd.commandName, ssdrBuildCmd.creator)
     except:
@@ -40,17 +33,11 @@ def initializePlugin(plugin):
         raise
 
     cmds.setParent('MayaWindow')
-    try:
-        mlMenus = cmds.menu('MukaiLab', query=True, itemArray=True)
-    except:
-        cmds.menu('MukaiLab', label='MukaiLab', tearOff=True)
-        mlMenus = cmds.menu('MukaiLab', query=True, itemArray=True, tearOff=True)
-
-    if mlMenus is None or 'SSDR' not in mlMenus:
-        cmds.setParent('MayaWindow|MukaiLab', menu=True)
-        cmds.menuItem('SSDR', subMenu=True, label='SSDR', tearOff=True)
-
-    createMenus()
+    if not cmds.menu('MukaiLab', query=True, exists=True):
+        cmds.menu('MukaiLab', label='MukaiLab')
+    cmds.setParent('MukaiLab', menu=True)
+    if not cmds.menu('SSDR', query=True, exists=True):
+        cmds.menuItem('SSDR', label='SSDR', tearOff=True, command='import maya.mel;maya.mel.eval("ssdrBuild")')
 
 def uninitializePlugin(plugin):
     fnPlugin = om.MFnPlugin(plugin)
@@ -59,6 +46,7 @@ def uninitializePlugin(plugin):
     except:
         sys.stderr.write('Failed to unregister command: {0}\n'.format(ssdrBuildCmd.commandName))
         raise
+    cmds.deleteUI('MayaWindow|MukaiLab|SSDR', menuItem=True)
 
 class ssdrBuildCmd(om.MPxCommand):
     commandName = 'ssdrBuild'

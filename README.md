@@ -19,7 +19,7 @@ Deformation Transfer for Triangle Meshes](https://people.csail.mit.edu/sumner/re
  - 指定した時間範囲のみが処理されます。
  - アニメーションが設定されていない余分な範囲も選択されていると、計算時間が長くなったり、計算が不安定になるなどの不具合が生じます。
 2. 処理対象となるシェイプを選択します。
-3. メニューの[MukaiLab]->[SSDR]->[build]より処理を開始します。
+3. メニューの[MukaiLab]->[SSDR]より処理を開始します。
 4. 処理が終わったら、コマンドラインに近似誤差（RMSE）と使用しているボーン数（#Bones）が表示されます。
  - 最小ボーン数や最大インフルーエンス数などの計算パラメータは、mlSsdrBuilder.py を直接編集することで変更できます。
 5. 変換後のスキンとボーンは「SsdrResult」グループにまとめられます。
@@ -40,7 +40,7 @@ SSDRの計算パラメータは、mlSsdrBuilder.py内、ssdrBuildCmdクラスの
 これら3つのパラメータの変更することで、それにともなう計算結果の変化を確認できると思います。現状では、最小ボーン数に大きな値を与えると計算が破綻することを確認しています。
 
 ## ビルドと実行方法
-拡張ライブラリ ssdr.pyd は Visual Studio 2013 Professional プロジェクトとして作成しています。ビルドには、外部ライブラリとして [Eigen](http://eigen.tuxfamily.org/ "Eigen")、 [QuadProg++](http://quadprog.sourceforge.net/ "QuadProg++")、[Boost](http://www.boost.org/ "Boost") 、および[Maya 2016.3 Developer Kit](https://apps.autodesk.com/MAYA/ja/Detail/Index?id=6303159649350432165&appLang=en&os=Win64 "MayaDevKit")が必要です。なお、ビルドおよび実行テストには Eigen 3.2.8、QuadProg++ 1.2.1、およびBoost 1.6.1 を用いました。
+拡張ライブラリ ssdr.pyd は Visual Studio 2012 Professional Update 4 プロジェクトとして作成しています（※ソリューションファイルはVS2013にて作成）。ビルドには、外部ライブラリとして [Eigen](http://eigen.tuxfamily.org/ "Eigen")、 [QuadProg++](http://quadprog.sourceforge.net/ "QuadProg++")、[Boost](http://www.boost.org/ "Boost") 、および[Maya 2016.3 Developer Kit](https://apps.autodesk.com/MAYA/ja/Detail/Index?id=6303159649350432165&appLang=en&os=Win64 "MayaDevKit")が必要です。なお、ビルドおよび実行テストには Eigen 3.2.8、QuadProg++ 1.2.1、およびBoost 1.55.0 を用いました。
 
 ###ビルド手順
 
@@ -52,16 +52,23 @@ SSDRの計算パラメータは、mlSsdrBuilder.py内、ssdrBuildCmdクラスの
  * QuadProg++.cc
  * Array.hh
  * Array.cc
-5. Visual Studio 2013上でビルド＆実行
+5. Visual Studio 上でビルド＆実行
 
 ### 開発＆テスト環境
 * Windows 10 Pro
 * Maya 2016 SP6
-* Visual Studio 2013 Update 5
+* Visual Studio 2012 Update 4
 * Maya 2016.3 Developer Kit
 * Eigen 3.2.8
 * QuadProg++ 1.2.1
-* Boost 1.6.1
+* Boost 1.55.0
 
 ## 変更履歴
-1. 2016/07/06 初版公開
+2016/09/24 アルファ版公開
+　- Maya2016標準の開発環境に準拠
+    * Visual Studio 2012 Update 4
+    * boost 1.55.0
+　- ssdr.pyd モジュール内の数学ライブラリをOpenMayaに置き換え
+　- メニュー生成関連のpythonコードの修正
+
+2016/07/06 初版公開

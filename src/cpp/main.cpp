@@ -67,19 +67,22 @@ int getNumBones()
 boost::python::list getBoneTranslation(int boneIdx, int frame)
 {
     boost::python::list retval;
-    retval.append(ssdrOutput.boneTrans[frame * ssdrOutput.numBones + boneIdx].Translation().x);
-    retval.append(ssdrOutput.boneTrans[frame * ssdrOutput.numBones + boneIdx].Translation().y);
-    retval.append(ssdrOutput.boneTrans[frame * ssdrOutput.numBones + boneIdx].Translation().z);
+    MVector v = ssdrOutput.boneTrans[frame * ssdrOutput.numBones + boneIdx].getTranslation(MSpace::kTransform);
+    retval.append(v.x);
+    retval.append(v.y);
+    retval.append(v.z);
     return retval;
 }
 
 boost::python::list getBoneRotation(int boneIdx, int frame)
 {
     boost::python::list retval;
-    retval.append(ssdrOutput.boneTrans[frame * ssdrOutput.numBones + boneIdx].Rotation().x);
-    retval.append(ssdrOutput.boneTrans[frame * ssdrOutput.numBones + boneIdx].Rotation().y);
-    retval.append(ssdrOutput.boneTrans[frame * ssdrOutput.numBones + boneIdx].Rotation().z);
-    retval.append(ssdrOutput.boneTrans[frame * ssdrOutput.numBones + boneIdx].Rotation().w);
+    double x, y, z, w;
+    ssdrOutput.boneTrans[frame * ssdrOutput.numBones + boneIdx].getRotationQuaternion(x, y, z, w);
+    retval.append(x);
+    retval.append(y);
+    retval.append(z);
+    retval.append(w);
     return retval;
 }
 

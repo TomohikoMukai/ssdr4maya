@@ -14,9 +14,6 @@
     <ClInclude Include="QuadProg++.hh">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="RigidTransform.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="SSDR.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

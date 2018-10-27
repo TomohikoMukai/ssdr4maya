@@ -66,11 +66,13 @@ SSDRの計算パラメータは、mlSsdrBuilder.py内、ssdrBuildCmdクラスの
 * Boost 1.55.0
 
 ## 変更履歴
-1. 2016/09/24 アルファ版公開
+- 2018/10/17 [SSDSプラグイン](https://github.com/TomohikoMukai/ssds)の公開に伴って更新＆サポート終了 
+
+- 2016/09/24 アルファ版公開
     - Maya2016標準の開発環境に準拠
         - Visual Studio 2012 Update 4
         - boost 1.55.0
     - ssdr.pyd モジュール内の数学ライブラリをOpenMayaに置き換え
     - メニュー生成関連のpythonコードの修正
-
-2. 2016/07/06 初版公開
+    
+- 2016/07/06 初版公開

@@ -1,4 +1,4 @@
-**最新版を[https://github.com/TomohikoMukai/ssds](https://github.com/TomohikoMukai/ssds)に公開しました。今後、SSDR4Mayaは非サポートとなります**
+# **最新版を[https://github.com/TomohikoMukai/ssds](https://github.com/TomohikoMukai/ssds)に公開しました。今後、SSDR4Mayaは非サポートとなります**
 
 # SSDR4Maya
 本コードは、Binh Huy Le氏とZhigang Deng氏による論文[Smooth Skinning Decomposition with Rigid Bones](http://graphics.cs.uh.edu/ble/papers/2012sa-ssdr/ "SSDR paper")のMaya2016用プラグイン実装のサンプルです。
